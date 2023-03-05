@@ -5,7 +5,7 @@ def run_form ():
     cancel_registration='cancelar';
     #si se quisiera mostrar todos los usuarios que se crearon con exito al finalizar el programa, deberia crar un diccionario aqui y agregar cada nuevo usuario a este en la linea 24. al salir del while printear este diccionario que contiene cada nuevo usuario creado. o con load json
     while(finish_registration == 'si'):
-        registration_form= True; #esto se utiliza para que el usuario pueda cancelar el registro cuando lo desee y se presume verdadero por estar activamente 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000registrandose
+        registration_form= True; #esto se utiliza para que el usuario pueda cancelar el registro cuando lo desee y se presume verdadero por estar activamente registrandose
         try:
             new_user={
                 'nombre': input("Ingrese nombre de usuario: ").strip().lower(),
@@ -37,7 +37,7 @@ def run_form ():
                 print(f"\n\t¡Usuario creado con exito!\n");
                 print_dictionary_users(new_user); #muestra por pantalla el usuario creado
                      
-        finish_registration=input(f"Desea crear otro usuario? Ingrese {finish_registration} para continuar: ").strip().lower()
+        finish_registration=input(f"Desea crear otro usuario? Ingrese {finish_registration.upper()} para continuar: ").strip().lower()
         if(finish_registration != 'si'):  
             print("Gracias por visitarnos.")
             
@@ -59,24 +59,30 @@ def print_dictionary_users(dictionary):   #muestra por pantalla los datos de un 
             print(f"{item}: {value}")
             
         
-def email_not_include_symbol(mail_of_user): #retorna TRUE si efectivamente el email NO contiene @ y .com ; FALSE si los contiene
-    not_contains_symbol=True; #se presume que el email NO contiene simbolo @ y terminacion .com, hasta que el while encuentre lo contrario.
-    lenght_email=len(mail_of_user);
+def email_not_include_symbol(mail_of_user): #esta funcion recorre el mail del usuario y retorna TRUE si el email no contiene o contiene mas de una @ o si el mail no contiene la terminacion .com/.es ; retorna FALSE si cumple con las condiciones de @ y .com
+    not_contains_symbol=True; #se presume que el email NO contiene simbolo @ y terminacion .com hasta que supere las verificaciones
     
-    while((not_contains_symbol) and (lenght_email > 0)): #se sale de este loop cuando [se encuentra una arroba Y hay terminacion .com]->(esto haria not_cotains_symbol FALSE) Ó cuando se recorran todos los caracteres del email sin exito de encontrar arroba(@)
-        list_email= list(mail_of_user);
-        for value,first_condition in enumerate(list_email):
-            if(first_condition == '@'): #recorre la lista hecha con el mail del usuario y si encuentra un arroba, procede a verificar si encuentra un punto '.'
-                for second_condition in list_email[value:-2]: #recorre desde donde encuentra un arroba hasta 3 caracteres antes de terminar el mail,asegurando que luego del punto haya por lo menos 2 caracteres (ejemplo terminaciones .es) incrementando value se podria maximizar la distancia entre donde encuentra el @ y donde deberia haber un punto.
-                    if(second_condition == '.'):
-                        not_contains_symbol= False; #solo si "encuentra la terminacion .com" cambia el valor de la variable not_contains_symbol, sino el mail NO verifica como valido 
-                        
-            lenght_email-= 1;  
-               
+    if(quantity_symbols_of_email(mail_of_user) == 1):
+        for second_condition_validate in mail_of_user[-4:]:
+            if(second_condition_validate == '.'):
+                not_contains_symbol = False;
+          
     return not_contains_symbol 
+
+
+def quantity_symbols_of_email(user_email): #esta funcion recorre el mail del usuario y retorna la cantidad de @ que encuentra (deberia haber solo 1)
+    quantity_symbols = 0;
+    list_email= list(user_email)
+    
+    for first_conditon_validate in list_email[1:]:
+        if(first_conditon_validate == '@'):
+            quantity_symbols+=1;
+            
+    return quantity_symbols;
 
 
 run_form()
     
         
 
+#el programa no considera presencia de 2 simbolos @ en el mail
