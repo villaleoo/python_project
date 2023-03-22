@@ -1,4 +1,4 @@
-from users_class import User;
+from users_class.users_class import User;
      
 class Client (User):
     
@@ -6,15 +6,16 @@ class Client (User):
     __is_admin= False;
     
     
-    def __init__(self,*args , card_number, contact_number, is_premium , id_client): ## *args y **kwards para pasaje con clave valor explicito ejemplo name= "leo"
-      super().__init__(*args);
+    def __init__(self, card_number, contact_number, is_premium , id_client,*args ,**kwards): ## *args y **kwards para pasaje con clave valor explicito ejemplo name= "leo"
+      super().__init__(*args,**kwards);
       self.__card_number=card_number;
       self.__contact_number= contact_number;
       self.__is_premium= is_premium;
       self.__id_client=id_client;
        
     def __str__(self):
-      client_data_string= f"Cliente con nombre de usuario: {self.__name} y mail de registro {self.__email}."
+      client_data_string= f"numero de tarjeta: {self.__card_number}, id de cliente : {self.__id_client}."
+      
       return client_data_string;
     
     def get_card_number(self):
@@ -47,4 +48,3 @@ class Client (User):
     def get_list_of_products(self):
       return self.__list_of_products;
 
-    
