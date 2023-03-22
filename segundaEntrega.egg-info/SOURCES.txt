@@ -1,0 +1,12 @@
+setup.py
+data_clients/__init__.py
+data_clients/form_registration.py
+data_clients/primer_entrega.py
+segundaEntrega.egg-info/PKG-INFO
+segundaEntrega.egg-info/SOURCES.txt
+segundaEntrega.egg-info/dependency_links.txt
+segundaEntrega.egg-info/top_level.txt
+users_class/__init__.py
+users_class/admin_class.py
+users_class/client_class.py
+users_class/users_class.py
